@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: VPC
+metadata:
+  name: wh-vpc-01
+spec:
+  region: ap-northeast-2
+  cidrBlock: 10.0.0.0/16
+  ipv6CidrBlock: false
+  public:
+    - name: wsi-public-subnet-a
+      cidr: 10.0.1.0/24
+      zone: a
+    - name: wsi-public-subnet-c
+      cidr: 10.0.2.0/24
+      zone: c
+  private:
+    - name: wsi-private-subnet-a
+      cidr: 10.0.100.0/24
+      zone: a
+    - name: wsi-private-subnet-c
+      cidr: 10.0.200.0/24
+      zone: c
+  route:
+    internetGateway:
+      enabled: true
+      name: wsi-igw
+    natGateway:
+      strategy: regional
+      name: wsi-ngw
+    publicRouteTablePerAz: false
+    privateRouteTablePerAz: true
+  dns:
+    hostnames: true
+    resolution: true
+  tags:
+    Project: wh-skills
+    Env: dev
